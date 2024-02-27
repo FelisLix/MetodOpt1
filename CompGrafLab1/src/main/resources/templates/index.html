@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>LAB1</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/dist/css/bootstrap.css}">
+</head>
+<body>
+
+<div class="d-grid gap-lg-3 col-10 mx-auto text-center">
+    <label></label>
+    <label>Лабораторна робота №1 Варіант 4</label>
+    <span class="display-6">РОЗВ’ЯЗАННЯ ЗАДАЧІ ЛІНІЙНОГО ПРОГРАМУВАННЯ ГРАФІЧНИМ МЕТОДОМ</span>
+    <label>Цільова функція: 3x1 + 3x2 + 3 -> max </label>
+    <label>Обмеження: </label>
+    <label>2x + y <= 14</label>
+    <label>x + y <= 8</label>
+    <label></label>
+    <label></label>
+<form method="post" action="show_data">
+    <div class="row">
+        <div class="col">
+            <input type="text" id="x1" name="x1"  class="form-control" placeholder="ВІД">
+        </div>
+        <div class="col">
+            <input type="text" id="x2" name="x2" class="form-control" placeholder="ДО">
+        </div>
+        <div class="col">
+            <input type="text" id="step" name="step" class="form-control" placeholder="КРОК">
+        </div>
+        <div class="col">
+            <input type="submit" class="btn btn-sm btn-outline-dark" value="ПОКАЗАТИ ГРАФІК">
+        </div>
+    </div>
+</form>
+<canvas></canvas>
+    <label>Результат:</label>
+    <label>x1 = 6, x2 = 2</label>
+    <label>F = 3x1 + 3x2 + 3 =  3 * 6 + 3 * 2 + 3 = 27 </label>
+    <label></label>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const createLineChart = (xData, yData1, yData2) => {
+        let data = {
+            labels: xData,
+            datasets:[{
+                data: yData1,
+                pointStyle: false,
+                borderColor: 'rgba(119, 110, 162, 1)',
+            },{
+                data: yData2,
+                pointStyle: false,
+                borderColor: 'rgba(183, 5, 5, 1)',
+
+            }]
+        }
+        let xScaleConfig = {
+            display: true,
+            title: {
+                display: true,
+                text: 'X'
+            },
+            ticks:{
+                autoSkip: true,
+                maxRotation: 0,
+            },
+            border: {
+                color: 'rgba(204,255,0,1)',
+                width: 2,
+            },
+            grid:{
+                color: context =>{
+                    if (context.tick.value === 0) {
+                        return 'rgba(0,0,0,0.5)';
+                    } else {
+                        return 'rgba(219,211,255,1)';
+                    }
+                }
+            }
+        }
+        let yScaleConfig = {
+            display: true,
+            title: {
+                display: true,
+                text: 'Y'
+            },
+            border: {
+                color: 'rgba(204,255,0,1)',
+                width: 2,
+            },
+            grid: {
+                color: function (context) {
+                    if (context.tick.value === 0) {
+                        return 'rgba(0,0,0,0.5)';
+                    } else {
+                        return 'rgba(219,211,255,1)';
+                    }
+                }
+            }
+        }
+        let config = {
+            type: 'line',
+            data: data,
+            options: {
+                scales:{
+                    x: xScaleConfig,
+                    y: yScaleConfig
+                },
+                plugins:{
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        }
+        let chart = new Chart(context, config);
+
+    }
+    let canvas = window.document.querySelector('canvas');
+    let context = canvas.getContext('2d');
+    let xData = [[${xData1}]];
+    let yData1 = [[${yData1}]];
+    let yData2 = [[${yData2}]];
+    let yData3 = [[${yData3}]];
+    let yData4 = [[${yData4}]];
+    createLineChart(xData, yData1, yData2, yData3, yData4);
+
+
+</script>
+<script th:src="@{webjars/jquery/3.7.0/dist/jquery.js}"></script>
+<script th:src="@{webjars/popperjs__core/2.11.8/dist/umd/popper.js}"></script>
+<script th:src="@{webjars/bootstrap/5.3.0/dist/js/bootstrap.bundle.js}"></script>
+</body>
+</html>
